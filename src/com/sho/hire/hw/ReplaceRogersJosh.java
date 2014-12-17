@@ -1,90 +1,125 @@
 package com.sho.hire.hw;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Josh Rogers
  * Date: 12/16/14
  * Time: 10:10 PM
- * # TODO
+ * # The main purpose of this class is for the use of the function 'ecalpeResrever',
+ * # which replaces text from left to right and then reverses the resulting text
  */
 public class ReplaceRogersJosh {
-    public static class MyStringBuffer{
-        int insertPos = 0;
+
+    /**
+     * Restricts the use of the buffer to keep track of each character inserted.
+     * Designed to
+     */
+    public static final class ReverseStringBuffer {
+        private int insertPos = 0;
         private final StringBuffer buf;
-        MyStringBuffer(int capacity){
+        public ReverseStringBuffer(int capacity){
             buf = new StringBuffer(capacity);
         }
-        public void insert(String s){
-            buf.insert(insertPos,s);
-            insertPos += s.length();
-        }
-        public void insert(char c){
+        private final void insert(char c){
             buf.insert(insertPos,c);
             insertPos++;
         }
-        public void insertSpace(){
+
+        /**
+         * inserts a space at the beginning of the buffer and then
+         * resets the position to 0. Any new text will then be added before
+         * the old text within buf
+         */
+        private final void insertSpace(){
             buf.insert(0,' ');
             insertPos = 0;
+        }
+
+        /**
+         * inserts the string into the buffer by looping through each character of the string and calling
+         * addInReverse(char)
+         * @param s - the string to inserted into buf
+         */
+        public final void addInReverse(String s){
+            for(int i = 0; i < s.length(); i++){
+                char c = s.charAt(i);
+                addInReverse(c);
+            }
+        }
+
+        /**
+         * Check if c is a space character. If so, call insertSpace(). If not, insert as normal
+         * @param c - character to be added to buf
+         */
+        public final void addInReverse(char c){
+            if(c == ' '){
+                insertSpace();
+            }else{
+                insert(c);
+            }
         }
         public String toString(){
             return buf.toString();
         }
     }
-    public static void addInReverse(String s, MyStringBuffer buf){
-        for(int i = 0; i < s.length(); i++){
-            char c = s.charAt(i);
-            addInReverse(c,buf);
-        }
-    }
-    public static void addInReverse(char c, MyStringBuffer buf){
-        if(c == ' '){
-            buf.insertSpace();
-        }else{
-            buf.insert(c);
-        }
-    }
-    public static String ecalpeResrever(String haystack, String needle, String replacement){
+
+    /**
+     * Replaces all text in 'haystack' that matches 'needle' with 'replacement' then reverses haystack.
+     * Assuming needle << haystack, this program should run in O(n) where n is the character length of haystack
+     * @param haystack - large text to be reversed
+     * @param needle - small text to be found in haystack and replaced with replacement
+     * @param replacement - replacement text
+     * @return the text after all replacements have been made and haystack has been reversed
+     */
+    public static final String ecalpeResrever(String haystack, String needle, String replacement){
         int needlepos = 0;
         boolean isMarked = false;
         StringBuffer needlebuf = new StringBuffer(needle.length());
-        MyStringBuffer buf = new MyStringBuffer(haystack.length());
+        ReverseStringBuffer buf = new ReverseStringBuffer(haystack.length());
         int i = 0;
+        /**
+         * For each character, check the following:
+         * 1. Is the character matched with the current position of needle? If so, add to needlebuf and
+         *    move to next character
+         * 2. Do we have a match for needle in haystack? If so, add it to the reverse buffer
+         * 3. No matches? Just add the character to reverse buffer and go to next character
+         */
         while(i < haystack.length()){
             char c = haystack.charAt(i);
             if(isMarked && needlebuf.length() == needle.length()){
                 isMarked = false;
-                addInReverse(replacement,buf);
+                buf.addInReverse(replacement);
+                //do no increment i here, otherwise we will skip this character
             }else if(isMarked && c == needle.charAt(needlepos)){
                 needlebuf.append(c);
                 needlepos++;
                 i++;
             }else if(isMarked){
                 isMarked = false;
-                addInReverse(needlebuf.toString(),buf);
+                buf.addInReverse(needlebuf.toString());
+                //do not increment i here, because we need to check again if the character is the
+                // beginning of the needle
             }else if (!isMarked && c == needle.charAt(0)){
                 needlebuf.setLength(0);
                 needlepos = 0;
                 isMarked = true;
+                //do not increment i here, because if needle is one character long, then we must apply the first if
+                // statement without skipping over any other characters
             }else{
-                addInReverse(c,buf);
+                buf.addInReverse(c);
                 i++;
             }
         }
+        //flush out the rest of needlebuf
         if(isMarked && needlebuf.length() == needle.length()){
-            addInReverse(replacement,buf);
+            buf.addInReverse(replacement);
         }
         return buf.toString();
-    }
-    public static void print(String s){
-        System.out.println(s);
-    }
-    public static void main(String[] args) {
-        System.out.println(ecalpeResrever("ABC", "A", "a"));
-        System.out.println(ecalpeResrever("AAA AAB BAA", "AA", "a"));
-        System.out.println(ecalpeResrever("I Work.", "Work", "Play"));
-        System.out.println(ecalpeResrever("Tests are the best!","the best!","just ok."));
-        System.out.println(ecalpeResrever("blergl hello world", "ld", "mer bur"));
-
     }
 
 }
