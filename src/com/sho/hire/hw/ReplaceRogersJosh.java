@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 /**
  * Created with IntelliJ IDEA.
@@ -48,6 +49,17 @@ public class ReplaceRogersJosh {
         public final void addInReverse(String s){
             for(int i = 0; i < s.length(); i++){
                 char c = s.charAt(i);
+                addInReverse(c);
+            }
+        }
+        /**
+         * inserts the buffer into the class level buffer by looping through each character of the buffer and calling
+         * addInReverse(char)
+         * @param buff - the buffer to be merged into class level buff
+         */
+        public final void addInReverse(StringBuffer buff){
+            for(int i = 0; i < buff.length(); i++){
+                char c = buff.charAt(i);
                 addInReverse(c);
             }
         }
@@ -101,7 +113,7 @@ public class ReplaceRogersJosh {
                 i++;
             }else if(isMarked){
                 isMarked = false;
-                buf.addInReverse(needlebuf.toString());
+                buf.addInReverse(needlebuf);
                 //do not increment i here, because we need to check again if the character is the
                 // beginning of the needle
             }else if (!isMarked && c == needle.charAt(0)){
@@ -121,5 +133,4 @@ public class ReplaceRogersJosh {
         }
         return buf.toString();
     }
-
 }

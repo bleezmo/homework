@@ -26,7 +26,7 @@ public void after() throws Exception {
 
 /** 
 * 
-* Method: addInReverse(String s, ReverseStringBuffer buf)
+* Method: addInReverse(String s)
 * 
 */ 
 @Test
@@ -35,11 +35,25 @@ public void testAddInReverseForSBuf() throws Exception {
     buf.addInReverse('a');
     buf.addInReverse("b c");
     Assert.assertEquals(buf.toString(),"c ab");
-} 
+}
 
-/** 
+/**
+ *
+ * Method: addInReverse(StringBuffer buff)
+ *
+ */
+@Test
+public void testAddInReverseForBBuf() throws Exception {
+    ReplaceRogersJosh.ReverseStringBuffer buf = new ReplaceRogersJosh.ReverseStringBuffer(2);
+    StringBuffer needlebuff = new StringBuffer(2);
+    needlebuff.append("b c");
+    buf.addInReverse('a');
+    buf.addInReverse(needlebuff);
+    Assert.assertEquals(buf.toString(),"c ab");
+}
+    /**
 * 
-* Method: addInReverse(char c, ReverseStringBuffer buf)
+* Method: addInReverse(char c)
 * 
 */ 
 @Test
@@ -82,6 +96,7 @@ public void testEcalpeResrever() throws Exception {
     Assert.assertEquals(ReplaceRogersJosh.ecalpeResrever("blergl mergl hello world","mergl hello", "o m g"),"world g m o blergl");
     Assert.assertEquals(ReplaceRogersJosh.ecalpeResrever("blergl mergl hello world","mergl hello","mer bur"),"world bur mer blergl");
     Assert.assertEquals(ReplaceRogersJosh.ecalpeResrever("blergl mergl hello world","mergl hello","mer"),"world mer blergl");
+
 }
 
 } 
