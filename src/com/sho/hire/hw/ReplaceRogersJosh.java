@@ -62,7 +62,7 @@ public class ReplaceRogersJosh {
                 isMarked = false;
                 addInReverse(needlebuf.toString(),buf);
             }else if (!isMarked && c == needle.charAt(0)){
-                needlebuf = new StringBuffer(needle.length());
+                needlebuf.setLength(0);
                 needlepos = 0;
                 isMarked = true;
             }else{
@@ -71,7 +71,6 @@ public class ReplaceRogersJosh {
             }
         }
         if(isMarked && needlebuf.length() == needle.length()){
-            isMarked = false;
             addInReverse(replacement,buf);
         }
         return buf.toString();
