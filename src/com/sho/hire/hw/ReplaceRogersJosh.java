@@ -1,11 +1,5 @@
 package com.sho.hire.hw;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.charset.Charset;
-
 /**
  * Created with IntelliJ IDEA.
  * User: Josh Rogers
@@ -18,7 +12,7 @@ public class ReplaceRogersJosh {
 
     /**
      * Restricts the use of the buffer to keep track of each character inserted.
-     * Designed to
+     * Designed to reverse the order of words in a string given one character at a time
      */
     public static final class ReverseStringBuffer {
         private int insertPos = 0;
@@ -83,24 +77,30 @@ public class ReplaceRogersJosh {
     /**
      * Replaces all text in 'haystack' that matches 'needle' with 'replacement' then reverses haystack.
      * Assuming needle << haystack, and the haystack does not consist of mostly needles,
-     * this program should run in approximately n time, where n is the character length of haystack
+     * this program should run in close to n time, where n is the character length of haystack
      * @param haystack - large text to be reversed
      * @param needle - small text to be found in haystack and replaced with replacement
      * @param replacement - replacement text
      * @return the text after all replacements have been made and haystack has been reversed
      */
     public String ecalpeResrever(String haystack, String needle, String replacement){
+        //keeps track of matched needle text in haystack
         int needlepos = 0;
+        //are we currently matching a needle in haystack?
         boolean isMarked = false;
+        //keeps track of the matched needle within the haystack to eventually lead to replacement
         StringBuffer needlebuf = new StringBuffer(needle.length());
+        //the result is stored here
         ReverseStringBuffer buf = new ReverseStringBuffer(haystack.length());
         int i = 0;
         /**
          * For each character, check the following:
          * 1. Is the character matched with the current position of needle? If so, add to needlebuf and
          *    move to next character
-         * 2. Do we have a match for needle in haystack? If so, add it to the reverse buffer
-         * 3. No matches? Just add the character to reverse buffer and go to next character
+         * 2. Do we have a match for needle in haystack? If so, add replacement to the reverse buffer
+         * 3. Were we in the process of matching but the most recent character did not match? If so,
+         *    add contents of needlebuf to buf and reset matching.
+         * 4. No matches? Just add the character to reverse buffer and go to next character
          */
         while(i < haystack.length()){
             char c = haystack.charAt(i);

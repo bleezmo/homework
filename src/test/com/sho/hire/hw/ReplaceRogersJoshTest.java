@@ -81,6 +81,7 @@ public void testEcalpeResrever() throws Exception {
     Assert.assertEquals(o.ecalpeResrever("Tests are the best!","the best!","just ok."),"ok. just are Tests");
     //testing end
     Assert.assertEquals(o.ecalpeResrever("blergl hello world", "ld", "mer bur"),"bur wormer hello blergl");
+    Assert.assertEquals(o.ecalpeResrever("blergl hello world", "le", "ld"),"world hello bldrgl");
     Assert.assertEquals(o.ecalpeResrever("blergl hello world","ld","mer"),"wormer hello blergl");
     Assert.assertEquals(o.ecalpeResrever("blergl mergl hello world","hello world", "o m g"),"g m o mergl blergl");
     Assert.assertEquals(o.ecalpeResrever("blergl mergl hello world","hello world","mer bur"),"bur mer mergl blergl");
