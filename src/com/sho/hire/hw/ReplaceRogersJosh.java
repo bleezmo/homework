@@ -89,7 +89,7 @@ public class ReplaceRogersJosh {
      * @param replacement - replacement text
      * @return the text after all replacements have been made and haystack has been reversed
      */
-    public static final String ecalpeResrever(String haystack, String needle, String replacement){
+    public String ecalpeResrever(String haystack, String needle, String replacement){
         int needlepos = 0;
         boolean isMarked = false;
         StringBuffer needlebuf = new StringBuffer(needle.length());
