@@ -82,7 +82,8 @@ public class ReplaceRogersJosh {
 
     /**
      * Replaces all text in 'haystack' that matches 'needle' with 'replacement' then reverses haystack.
-     * Assuming needle << haystack, this program should run in O(n) where n is the character length of haystack
+     * Assuming needle << haystack, and the haystack does not consist of mostly needles,
+     * this program should run in approximately n time, where n is the character length of haystack
      * @param haystack - large text to be reversed
      * @param needle - small text to be found in haystack and replaced with replacement
      * @param replacement - replacement text
