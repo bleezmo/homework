@@ -9,7 +9,7 @@ import org.junit.Assert;
 /** 
 * ReplaceRogersJosh Tester. 
 * 
-* @author <Authors name> 
+* @author Joshua Rogers
 * @since <pre>Dec 17, 2014</pre> 
 * @version 1.0 
 */ 
